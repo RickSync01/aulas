@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point and Click - Inventário/Exame</title>
+    <style>
+        /* Estilo para os objetos interativos do jogo */
+        .objeto-interativo {
+            color: #ffcc00;
+            text-decoration: underline dotted;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .objeto-interativo:hover {
+            color: #ff9900;
+        }
+
+        /* Fundo escuro do quadro */
+        .janela-modal {
+            display: none; 
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Quadro de informações */
+        .conteudo-modal {
+            background-color: #222;
+            color: #fff;
+            border: 2px solid #ffcc00;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 4px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            position: relative;
+            font-family: 'Courier New', Courier, monospace; /* Tom de jogo retro/investigação */
+        }
+
+        .botao-fechar {
+            color: #ffcc00;
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🕹️ Cenário do Jogo</h2>
+    <p>Você entra em um quarto escuro. Em cima da <span class="objeto-interativo" data-titulo="Mesa Velha" data-info="Uma mesa de madeira rangendo. Há marcas de arranhões profundos na superfície.">mesa</span>, você encontra uma <span class="objeto-interativo" data-titulo="Chave de Bronze" data-info="Uma chave antiga e pesada. Parece abrir a porta do porão.">chave trancada</span> perto de um <span class="objeto-interativo" data-titulo="Livro Misterioso" data-info="O título está apagado, mas as páginas exalam um cheiro de poeira e magia antiga.">livro</span> estranho.</p>
+
+    <!-- Um único Quadro (Modal) que serve para todos os objetos -->
+    <div id="quadro-jogo" class="janela-modal">
+        <div class="conteudo-modal">
+            <span class="botao-fechar" id="fechar-quadro">&times;</span>
+            <h3 id="quadro-titulo">Título do Objeto</h3>
+            <p id="quadro-texto">Descrição do objeto...</p>
+        </div>
+    </div>
+
+    <script>
+        // Seleciona o quadro único e seus textos internos
+        const quadro = document.getElementById('quadro-jogo');
+        const quadroTitulo = document.getElementById('quadro-titulo');
+        const quadroTexto = document.getElementById('quadro-texto');
+        const botaoFechar = document.getElementById('fechar-quadro');
+
+        // Seleciona TODOS os objetos interativos da página
+        const objetos = document.querySelectorAll('.objeto-interativo');
+
+        // Passa por cada objeto e adiciona o evento de clique automaticamente
+        objetos.forEach(objeto => {
+            objeto.addEventListener('click', () => {
+                // Pega os dados configurados nos atributos "data-" do HTML
+                const titulo = objeto.getAttribute('data-titulo');
+                const info = objeto.getAttribute('data-info');
+
+                // Injeta os dados dinamicamente no quadro e o exibe
+                quadroTitulo.textContent = titulo;
+                quadroTexto.textContent = info;
+                quadro.style.display = 'block';
+            });
+        });
+
+        // Fechar o quadro
+        botaoFechar.addEventListener('click', () => {
+            quadro.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === quadro) {
+                quadro.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
