@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point and Click - Investigação de Crime</title>
+    <style>
+        /* Estilos Gerais do Jogo */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h2 {
+            color: #ff3333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container-cenario {
+            margin: 20px auto;
+            max-width: 800px;
+            border: 4px solid #333;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            background-color: #000;
+            position: relative;
+        }
+
+        /* A imagem do cenario deve se ajustar bem */
+        .cenario-crime {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Estilo do cursor do mouse ao passar por cima de uma pista */
+        area {
+            cursor: pointer;
+        }
+
+        /* Fundo escuro da janela de informações (Modal) */
+        .janela-modal {
+            display: none; 
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+        }
+
+        /* Quadro de informações (Estilo arquivo de polícia / investigação) */
+        .conteudo-modal {
+            background-color: #1a1a1a;
+            color: #fff;
+            border: 2px dashed #ff3333;
+            margin: 12% auto;
+            padding: 30px;
+            border-radius: 4px;
+            width: 85%;
+            max-width: 450px;
+            box-shadow: 0 0 25px rgba(255, 51, 51, 0.4);
+            position: relative;
+            text-align: left;
+        }
+
+        .conteudo-modal h3 {
+            color: #ffcc00;
+            margin-top: 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .conteudo-modal p {
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Botão para fechar o quadro */
+        .botao-fechar {
+            color: #ff3333;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .botao-fechar:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🔍 Caso nº 404: O Escritório Abandonado</h2>
+    <p>Examine a cena do crime clicando nos objetos suspeitos para coletar evidências.</p>
+
+    <div class="container-cenario">
+        <!-- Substitua o 'src' abaixo pelo nome do arquivo da sua imagem gerada no Canva -->
+        <img src="https://picsum.photos" usemap="#mapa-crime" alt="Cena do Crime" class="cenario-crime">
+
+        <!-- O Mapa que define as regiões invisíveis onde o jogador pode clicar -->
+        <!-- NOTA: Estas coordenadas de exemplo funcionam na imagem gerada acima -->
+        <map name="mapa-crime">
+            <!-- Pista 1: Canto superior esquerdo (coordenadas retangulares) -->
+            <area shape="rect" coords="20,20,180,150" class="objeto-interativo" 
+                  data-titulo="📄 Documento Rasgado" 
+                  data-info="Pedaços de um contrato societário. Quase toda a folha foi queimada, mas a assinatura do principal suspeito ainda está legível no rodapé.">
+            
+            <!-- Pista 2: Centro da imagem (coordenadas circulares) -->
+            <area shape="circle" coords="400,250,60" class="objeto-interativo" 
+                  data-titulo="🍷 Taça de Vinho" 
+                  data-info="Duas taças na mesa. Uma delas tem uma marca de batom vermelho e um pó branco estranho decantado no fundo. Definitivamente contém veneno.">
+            
+            <!-- Pista 3: Canto inferior direito (coordenadas retangulares) -->
+            <area shape="rect" coords="600,350,780,480" class="objeto-interativo" 
+                  data-titulo="🪓 Arma do Crime?" 
+                  data-info="Uma ferramenta pesada deixada para trás. Há marcas de impacto recentes e fios de tecido cinza presos na ponta metálica.">
+        </map>
+    </div>
+
+    <!-- Quadro Único Automatizado (Modal) -->
+    <div id="quadro-jogo" class="janela-modal">
+        <div class="conteudo-modal">
+            <span class="botao-fechar" id="fechar-quadro">&times;</span>
+            <h3 id="quadro-titulo">Título da Evidência</h3>
+            <p id="quadro-texto">Descrição dos detalhes encontrados pelos investigadores...</p>
+        </div>
+    </div>
+
+    <script>
+        // Captura o quadro principal e seus elementos de texto internos
+        const quadro = document.getElementById('quadro-jogo');
+        const quadroTitulo = document.getElementById('quadro-titulo');
+        const quadroTexto = document.getElementById('quadro-texto');
+        const botaoFechar = document.getElementById('fechar-quadro');
+
+        // Seleciona automaticamente TODAS as áreas clicáveis mapeadas
+        const pistas = document.querySelectorAll('.objeto-interativo');
+
+        // Laço automático para monitorar o clique de todas as pistas da cena
+        pistas.forEach(pista => {
+            pista.addEventListener('click', (evento) => {
+                // Impede qualquer comportamento padrão do navegador ao clicar no link da área
+                evento.preventDefault(); 
+
+                // Lê dinamicamente as informações armazenadas na tag <area> clicada
+                const titulo = pista.getAttribute('data-titulo');
+                const info = pista.getAttribute('data-info');
+
+                // Injeta as informações no quadro e muda o estilo para aparecer na tela
+                quadroTitulo.textContent = titulo;
+                quadroTexto.textContent = info;
+                quadro.style.display = 'block';
+            });
+        });
+
+        // Evento para fechar o quadro ao clicar no botão "X"
+        botaoFechar.addEventListener('click', () => {
+            quadro.style.display = 'none';
+        });
+
+        // Evento para fechar o quadro se o jogador clicar no fundo escuro, fora do quadro físico
+        window.addEventListener('click', (event) => {
+            if (event.target === quadro) {
+                quadro.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
