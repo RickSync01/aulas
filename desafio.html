@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #111111;
+            color: #dcdcdc;
+        }
+        .bola {
+            height: 15px;
+            width: 15px;
+            background-color: #e50914;
+            border-radius: 50%;
+            margin-top: 7px;
+            margin-right: 5px;
+
+        }
+        .ajuste {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 10px 0 0 0;
+        }
+        #tama {
+            font-size: 1.50rem;
+            color: #e5e5e5;
+        }
+        .basetopo {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin: 0 0 10px 0;
+          color: #dcdcdc;
+        }
+        .itembasetopo {
+          padding: 10px 0 10px 0;
+          text-align: justify;
+          hyphens: auto;
+        }
+        .itembasetopo p {
+          font-size: 1.17rem;
+
+        }
+        .mapatopo {
+          display: grid;
+          grid-template-areas: 
+          "ladotopo lado2topo"
+          ;
+          grid-template-columns: 1/2fr 1/2fr;
+          grid-template-rows: 1fr;
+
+        }
+        .ladotopo {
+          grid-area: ladotopo;
+          width: 100%;
+          height: 100%;
+          margin-top: 5px ;
+          border: 10px solid black;
+        }
+        .lado2topo {
+          grid-area: lado2topo;
+          
+        }
+        .mapameio {
+          display: grid;
+          grid-template-areas:
+          "imgmeio ladomeio "
+          "imgmeio baixomeio"
+          ;
+          grid-template-columns: 2/3fr 1/3fr;
+          grid-template-rows: 1/2fr 1/2fr;
+          
+        }
+        .imgmeio {
+          grid-area: imgmeio;
+          width:100%;
+          height: 100%;
+          border: 5px solid black;
+        }
+        .ladomeio {
+          grid-area: ladomeio;
+
+        }
+        .baixomeio {
+          grid-area: baixomeio;
+        }
+        #jura {
+          margin: 10px 0 20px 7px;
+        }
+        .texto-ajuste {
+          text-align: justify;
+          hyphens: auto;
+        }
+        .palavra-chave {
+            color: #e50814;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+         }
+        .palavra-chave:hover {
+         color: #0056b3;
+        }
+
+        .modal {
+          display: none; 
+          position: fixed;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          justify-content: center;
+          align-items: center;
+        }
+
+        .modal-conteudo {
+          background-color: black;
+          color:#dcdcdc;
+          padding: 20px;
+          border-radius: 8px;
+          max-width: 400px;
+          width: 80%;
+          box-shadow: 0 4px 15px #e50914;
+          position: relative;
+        }
+        .modal-conteudo h3 {
+          color: #e50914;
+        }
+
+        .botao-fechar {
+          position: absolute;
+          top: 10px; right: 15px;
+          font-size: 20px;
+          cursor: pointer;
+          font-weight: bold;
+        }
+
+        /* Estilos da área de validação e revelação de texto */
+        .area-bloqueio {
+          margin-top: 15px;
+          padding: 15px;
+          background-color: #1a1a1a;
+          border-radius: 6px;
+          border: 1px dashed #e50914;
+        }
+        .area-bloqueio label {
+          font-size: 0.95rem;
+        }
+        .area-bloqueio input {
+          width: 100%;
+          padding: 8px;
+          margin-top: 8px;
+          background-color: #222;
+          border: 1px solid #444;
+          color: #fff;
+          border-radius: 4px;
+        }
+        .area-bloqueio button {
+          margin-top: 10px;
+          padding: 8px 12px;
+          background-color: #e50914;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: bold;
+        }
+        .area-bloqueio button:hover {
+          background-color: #b0070f;
+        }
+        #mensagemErro {
+          color: #ff3333;
+          font-size: 0.9rem;
+          margin-top: 8px;
+          display: none;
+        }
+        
+        /* Estilo para as informações secretas reveladas */
+        .info-revelada {
+          display: none;
+          margin-top: 15px;
+          padding: 12px;
+          background-color: #111;
+          border-left: 4px solid #e50914; /* Linha verde indicando sucesso */
+          font-size: 1.05rem;
+          line-height: 1.4;
+        }
+
+        @media screen and (max-width: 768px) {
+            .basetopo h2 {
+              font-size: 1.17rem;
+            }
+            .mapatopo {
+              grid-template-areas: 
+              "ladotopo "
+              "lado2topo"
+              ;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr auto;
+            }
+            #imgtopo {
+              width: 75%;
+              height: 100%;
+              margin-left: 60px;
+              margin-top: 0;
+              border: 0;
+            }
+            .mapameio {
+              grid-template-areas: 
+              "imgmeio  "
+              "ladomeio "
+              "baixomeio"
+              ;
+              grid-template-columns: 1fr;
+              grid-template-rows: 1fr 120px 1fr;
+            }
+            .imgmeio {
+              grid-area: imgmeio;
+              max-width: 100%;
+              border: 0;
+              height:100%;
+
+            }
+            .ladomeio {
+              grid-area: ladomeio;
+              margin-top: 20px;
+            }
+            .baixomeio {
+              grid-area: baixomeio;
+            }
+            #jura {
+              margin-top: 40px;
+              margin-bottom: 30px;
+            }
+            
+        }
+    </style>    
+</head>
+<body>
+    <div class="ajuste">
+        <div class="bola"></div>
+        <span id="tama">Atenção</span>
+    </div>
+    <div class="basetopo">
+        <h2 class="itembasetopo">Polícia investiga morte misteriosa de um Jovem</h2>
+        <div class="mapatopo">
+          <img id="imgtopo" class="ladotopo" src="https://i.postimg.cc/13KkGQhK/Reporter.png" alt="reporter sem rosto em pixels">
+          <p class="itembasetopo lado2topo">Nesta sexta-feira, 30 de Outubro, uma mãe reportou a emergência que seu filho não estava conseguindo respirar. Quando a emergência chegou ao local, já não havia mais o que fazer, logo a polícia foi chamada para descobrir a causa da morte.Testemunhos da vizinhança acreditam que seja envenenamento, mas apenas a autópsia do corpo confirmará. Fique Atento para futuras atualizações.</p>
+        </div>
+    </div>
+    <main>
+      <h2 id="jura">Enquanto isso na cena do crime: </h2>
+      <section class="mapameio">
+        <img class="imgmeio" src="https://i.postimg.cc/66CMBCKP/Cozinha-Sombria.png" alt="imagem de uma cozinha criada por IA.">
+        <p class="ladomeio texto-ajuste">Uma cozinha que estaria completamnete limpa se não tivesse água espalhada no chão perto de uma
+          <span class="palavra-chave" data-info="Uma mesa de madeira retângular com um vaso de flores no centro.">mesa</span>.
+          Um <span class="palavra-chave" data-info="Nome:? Idade: Por volta dos 18 a 20 anos. sexo: M.  O corpo não aparece apresentar nenhum tipo de ferimento visivel." data-secreto="O Pescoço da vítima apresenta uma marca pequena:Um ponto vermelho. Sangue?" data-senha="marca">corpo</span>
+          caído no chão entre a mesa e o <span class="palavra-chave" data-info="Um Fogão com 4 bocas. Uma das bocas está melada." data-secreto="Nada dmais , é só gordura." data-senha="boca">fogão</span>
+          ,junto com uma <span class="palavra-chave" data-info="A Janela está aberta. Do outro lado, colado na parede se encontra uma sacola com lixo. O culpado poderia ter usado a janelapara escapar?" data-secreto="Ao abrir a Sacola de Lixo , você imediatamente encontra um copo com resíduos de água">Janela de vidro</span>
+          acima do fogão com vista para fora e prateleiras nas parede ao lado.
+        </p>
+        <p class="baixomeio texto-ajuste">Gabriel, o Investigador, é o responsável por ver as cenas do crime e analisar os depoimentos dos suspeitos afim de encontrar pistas para a solução do caso. Na casa moram uma mãe e seus dois filhos: a irmã mais velha e o irmão mais novo. O irmão mais novo é a vítima. Procure por pistas nas falas dos suspeitos e descrições dos cenários.</p>
+      </section>
+    </main>
+    
+  <!-- Quadro de Informações (Modal) -->
+  <div id="meuQuadro" class="modal">
+    <div class="modal-conteudo">
+      <span class="botao-fechar" onclick="fecharQuadro()">&times;</span>
+      <h3 id="quadroTitulo">Informação</h3>
+      <p id="quadroTexto">Texto...</p>
+      
+      <!-- Caixa de validação por palavra-chave -->
+      <div id="formularioValida" class="area-bloqueio">
+        <label for="inputPalavra">Insira a palavra específica para desbloquear mais informações:</label>
+        <input type="text" id="inputPalavra" placeholder="Digite sua pista...">
+        <button onclick="verificarPalavra()">Desbloquear</button>
+        <p id="mensagemErro">Palavra incorreta! Investigue mais a cena.</p>
+      </div>
+      
+      <!-- Elemento que receberá o texto secreto dentro do próprio quadro -->
+      <div id="quadroTextoSecreto" class="info-revelada"></div>
+    </div>
+  </div>
+
+  <script>
+    const palavras = document.querySelectorAll('.palavra-chave');
+    const quadro = document.getElementById('meuQuadro');
+    const quadroTitulo = document.getElementById('quadroTitulo');
+    const quadroTexto = document.getElementById('quadroTexto');
+    const quadroTextoSecreto = document.getElementById('quadroTextoSecreto');
+    
+    const formularioValida = document.getElementById('formularioValida');
+    const inputPalavra = document.getElementById('inputPalavra');
+    const mensagemErro = document.getElementById('mensagemErro');
+
+    let senhaCorreta = "";
+    let textoSecreto = "";
+
+    palavras.forEach(palavra => {
+      palavra.addEventListener('click', () => {
+        // Coleta os atributos do HTML correspondentes à palavra clicada
+        quadroTitulo.innerText = palavra.innerText;
+        quadroTexto.innerText = palavra.getAttribute('data-info');
+        textoSecreto = palavra.getAttribute('data-secreto'); 
+        senhaCorreta = palavra.getAttribute('data-senha'); 
+        
+        // Limpa e esconde os elementos internos para o estado inicial
+        inputPalavra.value = "";
+        mensagemErro.style.display = "none";
+        quadroTextoSecreto.style.display = "none";
+        quadroTextoSecreto.innerText = "";
+
+        // Gerencia se exibe o formulário de senha ou não
+        if (senhaCorreta) {
+          formularioValida.style.display = "block";
+        } else {
+          formularioValida.style.display = "none";
+        }
+
+        quadro.style.display = 'flex';
+      });
+    });
+
+    // Função que faz a validação e injeta as informações adicionais
+    function verificarPalavra() {
+      const textoDigitado = inputPalavra.value.trim();
+
+      if (textoDigitado.toLowerCase() === senhaCorreta.toLowerCase()) {
+        mensagemErro.style.display = "none";
+        formularioValida.style.display = "none"; // Remove o campo de entrada após o acerto
+        
+        if (textoSecreto) {
+          quadroTextoSecreto.innerText = textoSecreto; // Adiciona as novas informações
+          quadroTextoSecreto.style.display = 'block'; // Torna visível no mesmo quadro
+        }
+      } else {
+        mensagemErro.style.display = "block";
+      }
+    }
+
+    function fecharQuadro() {
+      quadro.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      if (event.target === quadro) {
+        fecharQuadro();
+      }
+    }
+  </script>
+</body>
+</html>
