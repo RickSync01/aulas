@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,7 +118,7 @@
           border-radius: 0;
 
         }
-        #bloco-ajuste {
+        .bloco-ajuste {
           background-color: black;
           border-left: 5px solid #e50914;
           box-shadow: 0 0 5px 2px #e50914;
@@ -195,8 +195,8 @@
         .change {
           border: solid  #ffcc00;
         }
-        #sala-bloco {
-          border: solid #e50914;
+        .sala-bloco {
+          border: 5px solid #e50914;
         }
         .area-bloqueio label {
           font-size: 0.95rem;
@@ -301,10 +301,9 @@
               grid-template-areas: 
               "baixomeio"
               "imgmeio  "
-              "ladomeio "
-              ;
+              "ladomeio ";
               grid-template-columns: 1fr;
-              grid-template-rows: 1fr 1fr 1fr;
+              grid-template-rows: 100px 1fr 1fr;
             }
             .imgmeio {
               grid-area: imgmeio;
@@ -312,11 +311,12 @@
               border: 0;
               height:100%;
               margin-top: 10px;
+              margin-bottom: 20px;
 
             }
             .ladomeio {
               grid-area: ladomeio;
-              margin-top: 20px;
+              margin-top: 30px;
               margin-bottom:0px;
             }
             .baixomeio {
@@ -346,41 +346,44 @@
       <h2 id="jura">Enquanto isso na cena do crime: </h2>
       <!-- Descricação do cenário -->
       <section class="mapameio">
+        <p class="baixomeio texto-ajuste">Você é o Detetive Gabriel, responsável pelo caso da morte misteriosa de um jovem. Investigue as cenas, Confronte testemunhas e descubra a verdade por trás dessa caso.</p>
         <img class="imgmeio" src="https://i.postimg.cc/66CMBCKP/Cozinha-Sombria.png" alt="imagem de uma cozinha criada por IA.">
-        <p class="ladomeio texto-ajuste">
-          Uma cozinha que estaria completamnete limpa se não tivesse
-          <Span id="normal" class="palavra-chave" data-info=" Apenas água tratada.">água</Span>
-           espalhada no chão perto de uma
-          <span class="palavra-chave" data-info="Uma mesa de madeira retângular com um vaso de flores no centro.">mesa</span>.          
-          Um 
-          <span class="palavra-chave"
-           data-info="O corpo não aparece apresentar nenhum tipo de ferimento visivel.Parece que não houve nenhum tipo de briga , nem mesmo tentou se defender? Talvez seja apenas uma morte de causa natural" 
-           data-etapas='[
-              {"senha": "Leo", "texto": "Leo tem um físico forte , será que era atleta? Com esses músculos certamente não perderia em uma briga."},
-              {"senha": "rosto", "texto": "Sua Face está muito calma , quase como se estivesse realmente dormindo. Ele não reagiria se alguém tentasse algo contra ele."},
-              {"senha": "mao", "texto": "As pontas das unhas estão com uma coloração azulada/arroxeada. "}, 
-              {"senha": "marca", "texto": "Procurando mais atentamente o corpo de Leo , você descobre uma marca no lado esquerdo do pescoço. Um ponto vermelho com um leve hematoma ao redor. Algo foi injetado nele, pode ter sido uma agulha ou uma seringa, contudo não foi encontrado nenhum objeto ao redor da cena do crime."}
-              ]'>
-            corpo
-          </span>
-          caído no chão entre a mesa e o 
-          <span class="palavra-chave" data-info="Um Fogão com 4 bocas. Uma das bocas está melada.">
-            fogão
-          </span>
-          ,junto com uma 
-          <span class="palavra-chave" 
-          data-info="A Janela está aberta. Do outro lado, colado na parede se encontra uma sacola com lixo. O culpado poderia ter usado a janela para escapar?"
-          data-etapas='[
-              {"senha": "lixo", "texto": "Ao abrir a Sacola de Lixo , você imediatamente encontra um copo com resíduos de água"},
-              {"senha": "agua", "texto": "Ao analisar a água do copo no laboratório, é descoberto que uma substância foi mistudada: Clonazepam."}
-              ]'>
-              janela de vidro
-          </span>
-            acima do fogão com vista para fora e prateleiras nas parede ao lado.
-        </p>
-        <p class="baixomeio texto-ajuste">Gabriel, o Investigador, é o responsável por ver as cenas do crime e analisar os depoimentos dos suspeitos afim de encontrar pistas para a solução do caso. Na casa moram uma mãe e seus dois filhos. Procure por pistas nas falas dos suspeitos e descrições dos cenários.</p>
-      </section>
 
+        
+        <section class="ladomeio bloco-testemunho" 
+        data-etapas='[
+         {"senha": "Água", "texto": "Apenas água tratada."},
+         {"senha": "Mesa", "texto": "Uma mesa de madeira retângular com um vaso com flores no centro."},
+         {"senha": "Corpo", "texto": "Analisando o corpo não parece apresentar nenhum tipo de ferimentos visível. A pele não está com sinais de que houve uma briga.(Dica: partes do corpo.)"},
+         {"senha": "Leo", "texto": "— Ele tem um físico forte , será que era atleta? Certamente não perderia em uma briga."},
+         {"senha": "Mão", "texto": "— As unhas estão com uma coloração azulada/arroxeada."},
+         {"senha": "Pescoço", "texto": "Procurando mais atentamente por marcas no corpo, você identifica um ponto com sangue no lado direito do pescoço. Provavelmente ele foi picado por algo (Palavra-chave: marca-corpo)."},
+         {"senha": "Fogão", "texto": "Um fogão com 4 bocas, uma delas está melada."},
+         {"senha": "Janela", "texto": "Uma Janela aberta de vidro com uma fechadura no centro (Palavra-chave: Fechadura). Do outro lado da Janela embaixo tem um saco de lixo."},
+         {"senha": "lixo", "texto": "Ao vasculhar o saco de lixo, você encontra um copo com resíduos de um liquido. O copo não tem nada incomum para ser jogado no lixo."},
+         {"senha": "liquído", "texto": "Ao analisar o liquído no laboratório, os resultados mostram que se trata de água misturada com Clonazepam."}
+        ]'>
+         <div class="conteudo-testemunho bloco-ajuste">
+         <span class="design"> Cozinha </span>
+         <p class="texto-ajuste line-altura"> Uma cozinha que estaria limpa se não tivesse água no chão e ao lado um corpo. No centro do cômodo se localiza uma mesa de madeira , na parede oposta a porta de entrada um fogão que acima tem uma Janela.</p>
+                                                                                                                                                                      <!-- IDs transformados em classes para isolamento lúdico -->
+         <div class="historico-revelado"></div>
+                                                                                                           
+         <div class="area-bloqueio sala-bloco">
+          <label class="textoInstrucaoClasse" for="inputPalavra"> Digite uma palavra para investigar a cena.</label>
+          <input type="text" class="inputPalavraClasse" placeholder="Digite a pista...">
+                                                                                                                                               
+                                                                                                                                                         <!-- Chamando a função correta criada para os blocos da página -->
+          <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
+          <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>                                                                                                                                                               </div>
+         </div>
+        </div>
+        </section>
+
+
+
+
+        
       <!-- Testemunhos -->
       <h3 style="margin-bottom: 20px; margin-top: 20px;"> Testemunhas :</h3>
 
@@ -400,20 +403,24 @@
       {"senha": "Sophia", "texto": "— Ela é tão doce , nunca imaginei que meu filho conseguiria alguém como ela."},
       {"senha": "tapete", "texto": "— Eu comprei aquele tapete, achei ele tão lindo. Imagine se sentar no sofá e colocar seus pés em um tapete macio. (palavra-chave: tapete-?)"},
       {"senha": "livro-pista", "texto": "— Nunca tinha visto esse livro aqui."},
-      {"senha": "Seringa", "texto": "— Eu já vi a Beatriz com uma Seringa, mas essa não parece ser dela."}
+      {"senha": "Seringa", "texto": "— Eu já vi a Beatriz com uma Seringa, mas essa não parece ser dela."},
+      {"senha": "Marca-Corpo", "texto": "— Leo não tem nenhuma marca de nascença de no pescoço."},
+      {"senha": "Fechadura", "texto": "— Eu nunca consertei aquela Fechadura."},
+      {"senha": "Final-Beatriz", "texto": "— NÃO!! Beatriz jamais mataria o Leo. Por qual motivo ela faria isso? Eu não aguento perder mais ninguém..."},
+      {"senha": "Final-João", "texto": "— Então ele tentando ajudar meu filho era tudo encenação? POR QUE? Faça ele pagar por seus crimes!"},
+      {"senha": "Final-Julia", "texto": "— Isso é serio? Nunca faria nada contra meu filho. Meu filho!!!"},
+      {"senha": "Final-Sophia", "texto": "— Meu filho não precisa mais se preocupar. A culpada por tudo isso não se safou."}
       ]'>
        <div class="conteudo-testemunho">
         <span class="design"> Júlia </span>
         <p class="texto-ajuste line-altura"> — Eu estava na sala com meus filhos quando de repente eu acordei , realmente não lembro quando peguei no sono, Leo já não estava mais na sala . Decidi procurá-lo na cozinha quando entrei o vi no chão , Fui correndo até ele. Fiquei desesperada já que ele não estava mais respirando então gritei por ajuda , como uma luz divina o vizinho apareceu bem na hora . Ele tentou ajudar meu filho enquanto eu comecei a ligar para a emergência.</p>
     
-        <!-- IDs transformados em classes para isolamento lúdico -->
         <div class="historico-revelado"></div>
     
           <div class="area-bloqueio change">
           <label class="textoInstrucaoClasse" for="inputPalavra">Insira a palavra chave para desbloquear informações: </label>
           <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
       
-          <!-- Chamando a função correta criada para os blocos da página -->
           <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
           <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais.</p>
          </div>
@@ -425,10 +432,10 @@
 
       <section class="bloco-testemunho cor-shadow" 
         data-etapas='[
-          {"senha": "julia", "texto": "— Nunca vi minha mãe desse jeito antes. O Leo era muito precioso para ela..."},
+          {"senha": "Julia", "texto": "— Nunca vi minha mãe desse jeito antes. O Leo era muito precioso para ela..."},
           {"senha": "Leo", "texto": "— Jamais imaginaria que algo assim pudesse acontecer. Leo era , bem como posso dizer isso... Na frente da mãe era todo certinho mas por trás ele tem seus defeitos. Ele podia não ser a melhor pessoas do mundo, mas ainda era meu irmão."},
-          {"senha": "Joao", "texto": "— Não tem muito o que falar sobre ele ,mas que fique entre nós , ele é estranho já o vi pela janela da cozinha ficar encarando o nada e de repente ele olhava para a janela, onde eu estava. Me dá arrepios lembrar. Enfim deve ser um hábito dele, se não me engano ele trabalha em um hospital , mas não lembro qual é."},
-          {"senha": "agua", "texto": "— Água? Sim , eu bebi água. Tinha uma jarra na mesa da Sala. Não achei nada de estranho."},
+          {"senha": "João", "texto": "— Não tem muito o que falar sobre ele ,mas que fique entre nós , ele é estranho já o vi pela janela da cozinha ficar encarando o nada e de repente ele olhava para a janela, onde eu estava. Me dá arrepios lembrar. Enfim deve ser um hábito dele, se não me engano ele trabalha em um hospital , mas não lembro qual é."},
+          {"senha": "Água", "texto": "— Água? Sim , eu bebi água. Tinha uma jarra na mesa da Sala. Não achei nada de estranho."},
           {"senha": "Clonazepam", "texto": "— Clonazepam? Já ouvi falar desse medicamento que é geralmente usado no tratamento de condições psicológicas. Espera! Um efeito comum é... "},
           {"senha": "marca", "texto": "— Tinha uma marca no pescoço do Leo? Alguém deve ter feito isso. Então, realmente, ele foi realmente assassinado."},
           {"senha": "unhas", "texto": "— Não sei o que isso significa."},
@@ -437,7 +444,12 @@
           {"senha": "livro-pista", "texto": "— Esse livro... é MEU! Procurei tanto ele. Acho que faz um mês que ele sumiu. Obrigada por achar!"},
           {"senha": "Cianeto", "texto": "— Eu sei como funciona , se for ingerido pode caisar uma morte rápida . Então foi isso que matou o Leo?"},
           {"senha": "Seringa-estante", "texto": "— Não reconheço essa Seringa."},
-          {"senha": "confronto", "texto": "Sophia disse isso? Ela está mentindo!! Eu tenho algumas Seringas, mas as minhas não são como essa.(palavra-chave:posse)"}
+          {"senha": "confronto", "texto": "Sophia disse isso? Ela está mentindo!! Eu tenho algumas Seringas, mas as minhas não são como essa.(palavra-chave:posse)"},
+          {"senha": "Marca-Corpo", "texto": "— Acho que minha Mãe é a melhor pessoa que saberia sobre uma talvez marca de nascença no pescoço ou Sophia."},
+          {"senha": "Final-Beatriz", "texto": " — POR QUE? Vocé realmente acha que eu mataria meu irmão? Eu jamais faria ISSO!! Seu trabalho era descobrir a verdade e conseguiu ser péssimo nisso. EU te odeio!"},
+          {"senha": "Final-Julia", "texto": ""},
+          {"senha": "Final-João", "texto": ""},
+          {"senha": "Final-Sophia", "texto": ""}
           ]'>
           <div class="conteudo-testemunho">
             <span class="design"> Beatriz </span>
@@ -465,9 +477,14 @@
           {"senha": "Trabalho", "texto": "— Eu sou Infermeiro , Trabalho no Hosptial Amanhecer."},
           {"senha": "Assassino", "texto": "— Não fui eu!!!"},
           {"senha": "Clonazepam", "texto": "— Clonazapem? Que coincidencia. Também conhecido como Rivotril. É um remédio tarja preta , muito perigoso se usado de forma errada."},
-          {"senha": "coincidencia", "texto": "É que há algumas semanas atrás , quando cheguei em casa percebi que alguns medicamentos tinham sumido. Um deles foi o Rivotril em gotas."},
+          {"senha": "coincidência", "texto": "É que há algumas semanas atrás , quando cheguei em casa percebi que alguns medicamentos tinham sumido. Um deles foi o Rivotril em gotas."},
           {"senha": "Seringa-estante", "texto": "— Essa é uma das minhas Seringas."},
-          {"senha": "Cianeto", "texto": "— Então foi isso que matou o garoto."}
+          {"senha": "Cianeto", "texto": "— Então foi isso que matou o garoto."},
+          {"senha": "Fechadura", "texto": "— Não sei nada sobre isso."}
+          {"senha": "Final-Julia", "texto": ""},
+          {"senha": "Final-Sophia", "texto": ""},
+          {"senha": "Final-João", "texto": ""},
+          {"senha": "Final-Beatriz", "texto": ""}
         ]'>
         <div class="conteudo-testemunho">
          <span class="design"> Vizinho </span>
@@ -493,7 +510,7 @@
           {"senha":"Leo", "texto": "— Era um namorado decente se não fosse por aquele grupo de amigos dele."},
           {"senha": "amigos", "texto": "Odeio todos eles! Se não fosse por eles influenciando o Leo , ele-ele-ele..."},
           {"senha": "ele", "texto": "Esquece."},
-          {"senha": "manha" , "texto": "— Eu passei a noite anterior na casa dele , tomei café pela manhã com todos e me despedi."},
+          {"senha": "manhã" , "texto": "— Eu passei a noite anterior na casa dele , tomei café pela manhã com todos e me despedi."},
           {"senha": "Julia", "texto": "— Bem minha sogra é uma pessoa educada, ela se importava muito com Leo tanto que ele era a luz dela."},
           {"senha": "luz", "texto": "— É quase como se ela vivesse para fazer ele feliz, mas é uma pena que ao focar em uma luz acaba por não perceber outra."},
           {"senha": "Vizinho", "texto": "— Acho que o vi algumas vezes quando vinha para a casa de Leo contudo nunca tivemos nenhuma interação memorável."},
@@ -503,7 +520,12 @@
           {"senha": "tapete", "texto": "— O Tapete? É um lindo tapete! Minha sogra tem bom gosto."},
           {"senha": "livro-pista", "texto": "— Se não me engano , esse livro é da Beatriz. Ela é obcecada por esses assuntos."},
           {"senha": "seringa-estante", "texto": "— Já vi a Beatriz com essa Seringa antes.(palavra-chave:confronto)"},
-          {"senha": "posse", "texto": "— Será que me enganei? Tinha certeza que vi ela com essa mesma seringa."}
+          {"senha": "posse", "texto": "— Será que me enganei? Tinha certeza que vi ela com essa mesma seringa."},
+          {"senha": "Marca-Corpo", "texto": "— Acho que ele sempre teve essa marca . Nunca parei para prestar atenção nisso."}
+          {"senha": "Final-Julia", "texto": ""},
+          {"senha": "Final-Sophia", "texto": ""},
+          {"senha": "Final-Joao", "texto": ""},
+          {"senha": "Final-Beatriz", "texto": ""}
         ]'>
         <div class="conteudo-testemunho">
          <span class="design"> Sophia </span>
@@ -523,33 +545,33 @@
         </div>   
       </section>
  
-
-       <section id="cenario-sala" class="bloco-testemunho" 
+      
+       <section class="bloco-testemunho cenario-sala" 
         data-etapas='[
           {"senha": "Sofá", "texto": " Um sofá com apenas 1 almofada em cima. Tem uma mancha de pé no apoio de braço."},
           {"senha":"Tv", "texto": " A Tv está desligada."},
           {"senha": "Mesa" , "texto": " Uma mesa de vidro com um jarra de água em cima."},
           {"senha": "Jarra", "texto": " A Jarra se encontra preenchida pela metade com água."},
-          {"senha": "Agua", "texto": " Água Potável"},
-          {"senha": "Chao", "texto": " Tem umas almofadas perto do sofá , provalmente caíram quando algué se levantou. Vocé identifica um tapete entre a estante e a lateral do sofá."},
+          {"senha": "Água", "texto": " Água Potável"},
+          {"senha": "Chão", "texto": " Tem umas almofadas perto do sofá , provalmente caíram quando algué se levantou. Vocé identifica um tapete entre a estante e a lateral do sofá."},
           {"senha": "Estante", "texto": "Uma Estante com livros diversos. O topo não é visíbel."},
           {"senha": "topo", "texto": " Passando a mão pelo topo da estante , você pega uma seringa.(palavra-chave: Seringa-topo)"},
           {"senha": "tapete", "texto": "Um tapete marrom, mas parece fora do lugar."},
           {"senha": "tapete-levantar", "texto": " Ao levantar o tapete , você percebe marcas no piso do chão. Provavelmente algo pesado foi arrastado."},
           {"senha": "livros", "texto": "Observando os livros da estante , você encontra um livro de Toxicologia Avançada com uma página marcada."},
-          {"senha": "pagina", "texto": "Cianeto de potássio: Um componente altamente tóxico. No caso de ingestão , ligue para a emergência o mais rápido possível. O Cianeto de Potássio é capaz em um instante dependendo da dose.(palavra-chave: livro-pista )"},
+          {"senha": "páginna", "texto": "Cianeto de potássio: Um componente altamente tóxico. No caso de ingestão , ligue para a emergência o mais rápido possível. O Cianeto de Potássio é capaz em um instante dependendo da dose.(palavra-chave: livro-pista )"},
           {"senha": "Seringa-topo", "texto": "Ao analisar a Seringa é possível encontrar resíduos de alta concentração de Cianeto de Potássio.(palavra-chave: seringa-estante)"}
 
         ]'>
-        <div id="bloco-ajuste" class="conteudo-testemunho">
+        <div class="conteudo-testemunho bloco-ajuste">
          <span> Sala Principal</span>
          <p class="texto-ajuste line-altura"> A sala onde tudo começou. Um largo sofá virado para uma parede onde se encontra uma Tv presa a ela. Entre o sofá e a Tv , uma mesa pequena, de formato circular feita de vidro e em cima uma Jarra de Água. Observando os arredores , é possível ver uma estante com uma variedade de livros e ao lado uma cortina branca cobrindo uma janela.</p>
                                                                                        
                                                                                                <!-- IDs transformados em classes para isolamento lúdico -->
          <div class="historico-revelado"></div>
                                                                                                            
-         <div id="sala-bloco" class="area-bloqueio">
-          <label class="textoInstrucaoClasse" for="inputPalavra">Insira a palavra chave para desbloquear informações: </label>
+         <div class="area-bloqueio sala-bloco">
+          <label class="textoInstrucaoClasse" for="inputPalavra"> Digite o que deseja investigar na cena: </label>
           <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
                                                                                                                                                
                                                                                                                                                          <!-- Chamando a função correta criada para os blocos da página -->
@@ -563,25 +585,35 @@
 
 
 
-
-
-
-    <div class="pergunta-final">
-      <h3 class="texto-final"> Quem Matou Leo ? </h3>
-      <input type="text" id="suspeita" placeholder="Quem vocé vai prender?">
-      <button class="botao-final" onclick="verificarSuspeita()"> Prender </button>
-
-      <div id="mensagem"></div>
-    </div>
-      
-
-
-
-      
     
-    
+       <section class="bloco-testemunho cenario-sala" 
+        data-etapas='[
+          {"senha": "Beatriz", "texto": " Você decide que o culpado por toda essa situação é Beatriz, a irmã mais velha da Vítima. Se ela é realmente a culpada? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-Beatriz )."},
+          {"senha": "Julia", "texto": "Você decide que o culpado por toda essa situação é a Julia, a mãe sa vítima. Se ela é realmente a culpada? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-Julia)."},
+          {"senha": "Sophia", "texto": "Você decide que o culpado por toda essa situação é Sophia, a namorada da Vítima. Se ela é realmente a culpada? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-Sophia )."},
+          {"senha": "Joao", "texto": "Você decide que o culpado por toda essa situação é João, o Vizinho da Vítima. Se ele é realmente o culpado? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-João )."}
+        ]'>
+        <div class="conteudo-testemunho bloco-ajuste">
+         <span> Pergunta FInal </span>
+         <p class="texto-ajuste line-altura"> Após Invertigar as cenas, Interrogar os Suspeitos. Chegou a hora de dar um fim nesse caso. Então quem você acha que foi o Culpado por toda essa Situação?</p>
+                                                                                       
+                                                                                               <!-- IDs transformados em classes para isolamento lúdico -->
+         <div class="historico-revelado"></div>
+                                                                                                           
+         <div class="area-bloqueio sala-bloco">
+          <label class="textoInstrucaoClasse" for="inputPalavra"> Quem você deseja prender? </label>
+          <input type="text" class="inputPalavraClasse" placeholder="Digite o suspeito...">
+                                                                                                                                               
+                                                                                                                                                         <!-- Chamando a função correta criada para os blocos da página -->
+          <button class="change-buttom" onClick="verificarPalavraBloco(event)">Prender</button>
+          <p class="mensagem-erro-classe">Nome incorreto! </p>                                                                                                                                                               </div>
+         </div>
+        </div>   
+      </section>
 
 
+
+      
 
 
 
