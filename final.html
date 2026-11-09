@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #111111;
+            color: #dcdcdc;
+        }
+        
+        .bola {
+            height: 15px;
+            width: 15px;
+            background-color: #e50914;
+            border-radius: 50%;
+            margin-top: 7px;
+            margin-right: 5px;
+        }
+        
+        .ajuste {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 10px 0 0 0;
+        }
+        
+        #tama {
+            font-size: 1.50rem;
+            color: #e5e5e5;
+        }
+        
+        .basetopo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 0 10px 0;
+            color: #dcdcdc;
+        }
+        
+        .itembasetopo {
+            padding: 10px 0 10px 0;
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .itembasetopo p {
+            font-size: 1.17rem;
+        }
+        
+        .mapatopo {
+            display: grid;
+            grid-template-areas: "ladotopo lado2topo";
+            grid-template-columns: 1/2fr 1/2fr;
+            grid-template-rows: auto;
+        }
+        
+        .ladotopo {
+            grid-area: ladotopo;
+            width: 100%;
+            height: 300px;
+            margin-top: 5px;
+            border: 10px solid black;
+        }
+        
+        .lado2topo {
+            grid-area: lado2topo;
+            font-size: 30px; 
+            margin-right: 50px;
+        }
+        
+        .mapameio {
+            display: grid;
+            grid-template-areas: "imgmeio baixomeio" "imgmeio ladomeio ";
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1/2fr 2/3fr;
+        }
+        
+        .imgmeio {
+            grid-area: imgmeio;
+            width: 100%;
+            height: 400px;
+            border: 5px solid black;
+        }
+        
+        .ladomeio {
+            grid-area: ladomeio;
+        }
+        
+        .baixomeio {
+            grid-area: baixomeio;
+            margin-right: 50px;
+        }
+        
+        #jura {
+            margin: 10px 0 20px 7px;
+        }
+        
+        .texto-ajuste {
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .line-altura {
+            line-height: 35px;
+        }
+        
+        .bloco-testemunho {
+            display: flex;
+            flex-direction: column;
+            background-color: black;
+            margin: 50px;
+        }
+        
+        .conteudo-testemunho {
+            background-color: #1a1a24;
+            border: 2px solid black;
+            padding: 20px;
+            font-style: oblique;
+            border-radius: 0;
+        }
+        
+        .bloco-ajuste {
+            background-color: black;
+            border-left: 5px solid #e50914;
+            box-shadow: 0 0 5px 2px #e50914;
+        }
+        
+        .design {
+            color: #00e5ff;
+        }
+        
+        .cor-shadow {
+            box-shadow: 0 0 10px 3px #ffcc00;
+        }
+        
+        .palavra-chave {
+            color: #e50814;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .palavra-chave:hover {
+            color: #0056b3;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-conteudo {
+            background-color: black;
+            color: #dcdcdc;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 80%;
+            box-shadow: 0 4px 15px #e50914;
+            position: relative;
+        }
+        
+        .modal-conteudo h3 {
+            color: #e50914;
+        }
+        
+        .botao-fechar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        /* Estilos da área de validação e revelação de texto */
+        
+        .area-bloqueio,
+        .pergunta-final {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #1a1a1a;
+            border-radius: 6px;
+            border: 1px solid #e50914;
+        
+        }
+        
+        .ajustlink { 
+            font-size: 50px;
+            margin:  20px 9 0 50px;
+            color: white;
+        }
+        
+        .errado {
+            border-color: red !important;
+            color: red;
+        }
+        
+        #mensagem {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .change {
+            border: solid #ffcc00;
+        }
+        
+        .sala-bloco {
+            border: 5px solid #e50914;
+        }
+        
+        .area-bloqueio label {
+            font-size: 0.95rem;
+        }
+        
+        .area-bloqueio input,
+        .pergunta-final input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+            background-color: #222;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 4px;
+        }
+        
+        .area-bloqueio button,
+        .botao-final {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .change-buttom {
+            background-color: #ffcc00;
+            color: #1a1a24;
+        }
+        
+        .area-bloqueio button:hover,
+        .botao-final:hover {
+            background-color: #b0070f;
+        }
+        
+        #mensagemErro {
+            color: #ff3333;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            display: none;
+        }
+        .mensagem-erro-classe {
+            color: #ff3333;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        .historico-revelado {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .info-revelada {
+            margin-bottom: 8px;
+            padding: 10px;
+            background-color: #111;
+            border-left: 4px solid #28a745;
+            font-size: 1rem;
+            line-height: 1.4;
+            animation: fadeln 0.3s ease;
+        }
+        
+        @keyframes fadeln {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Estilo para as informações secretas reveladas */
+        
+        .info-revelada {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #111;
+            border-left: 4px solid #e50914;
+            /* Linha verde indicando sucesso */
+            font-size: 1.05rem;
+            line-height: 1.4;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .basetopo h2 {
+                font-size: 1.17rem;
+            }
+            .mapatopo {
+                grid-template-areas: "ladotopo " "lado2topo";
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr auto;
+            }
+            .lado2topo {
+                margin-right: 10px;
+                font-size: 20px;
+            }
+            #imgtopo {
+                width: 75%;
+                height: 100%;
+                margin-left: 60px;
+                margin-top: 0;
+                border: 0;
+            }
+            .mapameio {
+                grid-template-areas: "baixomeio" "imgmeio  " "ladomeio ";
+                grid-template-columns: 1fr;
+                grid-template-rows: 100px 1fr 1fr;
+            }
+            .imgmeio {
+                grid-area: imgmeio;
+                max-width: 100%;
+                border: 0;
+                height: 100%;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+            .ladomeio {
+                grid-area: ladomeio;
+                margin-top: 30px;
+                margin-bottom: 0px;
+            }
+            .baixomeio {
+                grid-area: baixomeio;
+                margin-right: 10px;
+            }
+            #jura {
+                margin-top: 40px;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ajuste">
+        <div class="bola"></div>
+        <span id="tama">Atenção</span>
+    </div>
+    <div class="basetopo">
+        <h2 class="itembasetopo">Polícia investiga morte misteriosa de um Jovem</h2>
+        <div class="mapatopo">
+            <img id="imgtopo" class="ladotopo" src="https://i.postimg.cc/13KkGQhK/Reporter.png" alt="reporter sem rosto em pixels">
+            <p class="itembasetopo lado2topo">Nesta sexta-feira, 30 de Outubro, uma mãe reportou a emergência que seu filho se encontrava em uma situação crítica. Quando a emergência chegou ao local, já não havia mais o que fazer, logo a polícia foi chamada para descobrir a causa da morte.
+                Testemunhos da vizinhança acreditam que seja envenenamento, mas apenas a autópsia do corpo confirmará. Fique atento para futuras atualizações.</p>
+        </div>
+    </div>
+    <main>
+        <h2 id="jura">Enquanto isso na cena do crime: </h2>
+        <!-- Descricação do cenário -->
+        <section class="mapameio">
+            <p class="baixomeio texto-ajuste">Você é o Detetive Gabriel, responsável pelo caso da morte misteriosa de um jovem. Investigue as cenas, Confronte testemunhas e descubra a verdade por trás dessa caso.</p>
+            <img class="imgmeio" src="https://i.postimg.cc/66CMBCKP/Cozinha-Sombria.png" alt="imagem de uma cozinha criada por IA.">
+
+
+            <section class="ladomeio bloco-testemunho" data-etapas='[
+         {"senha": "Água", "texto": "Apenas água tratada."},
+         {"senha": "Mesa", "texto": "Uma mesa de madeira retângular com um vaso com flores no centro."},
+         {"senha": "Corpo", "texto": "Analisando o corpo não parece apresentar nenhum tipo de ferimentos visível. A pele não está com sinais de que houve uma briga.(Dica: partes do corpo.)"},
+         {"senha": "Leo", "texto": "— Ele tem um físico forte , será que era atleta? Certamente não perderia em uma briga."},
+         {"senha": "Mão", "texto": "— As unhas estão com uma coloração azulada/arroxeada.(1 parte do corpo de 2 encontrada.)"},
+         {"senha": "Pescoço", "texto": "Procurando mais atentamente por marcas no corpo, você identifica um ponto com sangue no lado direito do pescoço. Provavelmente ele foi picado por algo (Palavra-chave: marca-corpo)."},
+         {"senha": "Fogão", "texto": "Um fogão com 4 bocas, uma delas está melada."},
+         {"senha": "Janela", "texto": "Uma Janela aberta de vidro com uma fechadura no centro (Palavra-chave: Fechadura). Do outro lado da Janela embaixo tem um saco de lixo."},
+         {"senha": "lixo", "texto": "Ao vasculhar o saco de lixo, você encontra um copo com resíduos de um liquido. O copo não tem nada incomum para ser jogado no lixo."},
+         {"senha": "liquído", "texto": "Ao analisar o liquído no laboratório, os resultados mostram que se trata de água misturada com Clonazepam."}
+        ]'>
+                <div class="conteudo-testemunho bloco-ajuste">
+                    <span class="design"> Cozinha </span>
+                    <p class="texto-ajuste line-altura"> Uma cozinha que estaria limpa se não tivesse água no chão e ao lado um corpo. No centro do cômodo se localiza uma mesa de madeira , na parede oposta a porta de entrada um fogão que acima tem uma Janela.</p>
+                    <!-- IDs transformados em classes para isolamento lúdico -->
+                    <div class="historico-revelado"></div>
+
+                    <div class="area-bloqueio sala-bloco">
+                        <label class="textoInstrucaoClasse" for="inputPalavra"> Digite uma palavra para investigar a cena.</label>
+                        <input type="text" class="inputPalavraClasse" placeholder="Digite a pista...">
+
+                        <!-- Chamando a função correta criada para os blocos da página -->
+                        <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
+
+           
+
+                    </div>
+                </div>
+                </div>
+            </section>
+
+
+
+
+
+            <!-- Testemunhos -->
+            <h1 style="margin-bottom: 20px; margin-top: 20px; margin-left: 50px;"> Testemunhas :</h1> 
+
+            <section class="bloco-testemunho cor-shadow" data-etapas='[
+      {"senha": "Beatriz", "texto": "— Ela estava dormindo também quando acordei. Ela já tem 25 anos? 24? bem por aí. Ela faz faculdade de... do que mesmo. Me desculpe eu não lembro muito bem."},
+      {"senha":"Leo", "texto": "— Como algo assim pôde acontecer com ele? Um garoto carinhoso e delicado. Terminou o Ensino Médio e nunca reprovou , não fazia faculdade ainda. Leo gostava muito de jogar futebol."},
+      {"senha": "Vizinho", "texto": "— Sinceramente , eu não gostava muito dele mas depois do que aconteceu... parece que eu tive uma primeira impressão ruim dele"},
+      {"senha": "Joao", "texto": "— Quem é João?"},
+      {"senha": "agua", "texto": "— Tinha uma jarra de água na mesa da sala."},
+      {"senha": "Clonazepam", "texto": "— Clonazepam? Não sei o que é."},
+      {"senha": "Sophia", "texto": "— Ela é tão doce , nunca imaginei que meu filho conseguiria alguém como ela."},
+      {"senha": "tapete", "texto": "— Eu comprei aquele tapete, achei ele tão lindo. Imagine se sentar no sofá e colocar seus pés em um tapete macio. (palavra-chave: tapete-?)"},
+      {"senha": "livro-pista", "texto": "— Nunca tinha visto esse livro aqui."},
+      {"senha": "Seringa", "texto": "— Eu já vi a Beatriz com uma Seringa, mas essa não parece ser dela."},
+      {"senha": "Marca-Corpo", "texto": "— Leo não tem nenhuma marca de nascença de no pescoço."},
+      {"senha": "Fechadura", "texto": "— Eu nunca consertei aquela Fechadura."},
+      {"senha": "Final-Beatriz", "texto": "— NÃO!! Beatriz jamais mataria o Leo. Por qual motivo ela faria isso? Eu não aguento perder mais ninguém..."},
+      {"senha": "Final-João", "texto": "— Então ele tentando ajudar meu filho era tudo encenação? POR QUE? Faça ele pagar por seus crimes!"},
+      {"senha": "Final-Julia", "texto": "— Isso é serio? Nunca faria nada contra meu filho. Meu filho!!!"},
+      {"senha": "Final-Sophia", "texto": "— Meu filho não precisa mais se preocupar. A culpada por tudo isso não se safou."}
+      ]'>
+                <div class="conteudo-testemunho">
+                    <span class="design"> Julia </span>
+                    <p class="texto-ajuste line-altura"> — Eu estava na sala com meus filhos quando de repente eu acordei , realmente não lembro quando peguei no sono, Leo já não estava mais na sala . Decidi procurá-lo na cozinha quando entrei o vi no chão , Fui correndo até ele. Fiquei
+                        desesperada já que ele não estava mais respirando então gritei por ajuda , como uma luz divina o vizinho apareceu bem na hora . Ele tentou ajudar meu filho enquanto eu comecei a ligar para a emergência.</p>
+
+                    <div class="historico-revelado"></div>
+
+                    <div class="area-bloqueio change">
+                        <label class="textoInstrucaoClasse" for="inputPalavra">Insira a palavra chave para desbloquear informações: </label>
+                        <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
+
+                        <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais.</p>
+
+                    </div>
+                    </div>              
+                  </div>
+            </section>
+
+
+
+
+            <section class="bloco-testemunho cor-shadow" data-etapas='[
+          {"senha": "Julia", "texto": "— Nunca vi minha mãe desse jeito antes. O Leo era muito precioso para ela..."},
+          {"senha": "Leo", "texto": "— Jamais imaginaria que algo assim pudesse acontecer. Leo era , bem como posso dizer isso... Na frente da mãe era todo certinho mas por trás ele tem seus defeitos. Ele podia não ser a melhor pessoas do mundo, mas ainda era meu irmão."},
+          {"senha": "Vizinho", "texto": "— O João? Não tem muito o que falar sobre ele ,mas que fique entre nós. Ele é estranho já o vi pela janela da cozinha ficar encarando o nada e de repente ele olhava para a janela, onde eu estava. Me dá arrepios lembrar. Enfim deve ser um hábito dele, se não me engano ele trabalha em um hospital , mas não lembro qual é."},
+          {"senha": "Água", "texto": "— Água? Sim , eu bebi água. Tinha uma jarra na mesa da Sala. Não achei nada de estranho."},
+          {"senha": "Clonazepam", "texto": "— Clonazepam? Já ouvi falar desse medicamento que é geralmente usado no tratamento de condições psicológicas. Espera! Um efeito comum é... "},
+          {"senha": "marca", "texto": "— Tinha uma marca no pescoço do Leo? Alguém deve ter feito isso. Então, realmente, ele foi realmente assassinado."},
+          {"senha": "unhas", "texto": "— Não sei o que isso significa."},
+          {"senha": "sophia", "texto": "— Ela é uma boa garota , não sei o que ela viu no meu irmão , mas estão juntos. Uma coisa ruim sobre ela é que ela se preucupa muito com as aparências , todo mundo se preocupa com isso entranto no caso dela é demais."},
+          {"senha": "tapete", "texto": "— Mãe fica se gabando sobre quão lindo é o tapete, mas admito que colocar ele entre a mesa e o sofá foi útil. (palavra-chave: ?-levantar)"},
+          {"senha": "livro-pista", "texto": "— Esse livro... é MEU! Procurei tanto ele. Acho que faz um mês que ele sumiu. Obrigada por achar!"},
+          {"senha": "Cianeto", "texto": "— Eu sei como funciona , se for ingerido pode caisar uma morte rápida . Então foi isso que matou o Leo?"},
+          {"senha": "Seringa-estante", "texto": "— Não reconheço essa Seringa."},
+          {"senha": "confronto", "texto": "Sophia disse isso? Ela está mentindo!! Eu tenho algumas Seringas, mas as minhas não são como essa.(palavra-chave:posse)"},
+          {"senha": "Marca-Corpo", "texto": "— Acho que minha Mãe é a melhor pessoa que saberia sobre uma talvez marca de nascença no pescoço ou Sophia."},
+          {"senha": "Final-Beatriz", "texto": " — POR QUE? Vocé realmente acha que eu mataria meu irmão? Eu jamais faria ISSO!! Seu trabalho era descobrir a verdade e conseguiu ser péssimo nisso. EU te odeio!"},
+          {"senha": "Final-Julia", "texto": " — Você realmente acha que minha mãe fez isso? Você está errado! Ela amava o Leo mais que a filha mais velha dela, eu estava lá, eu vi em primeira pessoa o amor dela pelo filho. MINHA MÃE NÃO MATOU O LEO!"},
+          {"senha": "Final-João", "texto": "— Eu sabia! não sei oque meu irmão fez para ele, mas ele não merecia ter morrido tão jovem. Obridada por achar o culpado!"},
+          {"senha": "Final-Sophia", "texto": " — Isso realmente está certo? Tem que estamos falando da mesma Sophia? A Sophia que eu conheço jamais faria isso. Faria? "}
+          ]'>
+                <div class="conteudo-testemunho">
+                    <span class="design"> Beatriz </span>
+                    <p class="texto-ajuste line-altura"> — Estava assistindo Tv com o Leo e minha mãe. Fui começando a me sentir sonolenta e só me lembro de acordar devido a voz alta de minha mãe . Ela estava gritando por ajuda então alguem bateu na porta perguntando se algo tinha acontecido.
+                        Eu fui correndo abrir a porta depois que vi o que estava acontecendo na cozinha, acabou por ser o João. Acho que já sabe o que aconteceu depois.</p>
+
+                    <div class="historico-revelado"></div>
+
+                    <div class="area-bloqueio change">
+                        <label class="textoInstrucaoClasse" for="inputPalavra">Insira a palavra chave para desbloquear informações: </label>
+                        <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
+
+                        <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
+                        <p class="mensagem-erro-classe" style="display: none;">Palavra incorreta! Investigue mais.</p>
+                             
+                </div>    
+                </div>
+            </section>
+
+
+
+            <section class="bloco-testemunho cor-shadow" data-etapas='[
+          {"senha": "Beatriz", "texto": "— Tive algumas conversas com ela. Não parece ser uma pessoas ruim. mas tem algo nela que me incomoda."},
+          {"senha":"Leo", "texto": "— É uma tristeza o que aconteceu com o garoto. Ás vezes , quando estou voltando do trabalho o vejo com seu grupo de amigos fazendo... bem espero que nada de errado."},
+          {"senha": "Sophia" , "texto": "— Essa menina... Já vi ela na frente da porta da caso ao lado . Ela não parecia querer entrar na casa , quase como se estivese com medo. Dizendo ela que estava tudo bem então esqueci o asusnto."},
+          {"senha": "Trabalho", "texto": "— Eu sou Infermeiro , Trabalho no Hosptial Amanhecer."},
+          {"senha": "Assassino", "texto": "— Não fui eu!!!"},
+          {"senha": "Clonazepam", "texto": "— Clonazepam? Que coincidencia. Também conhecido como Rivotril. É um remédio tarja preta , muito perigoso se usado de forma errada."},
+          {"senha": "coincidência", "texto": "É que há algumas semanas atrás , quando cheguei em casa percebi que alguns medicamentos tinham sumido. Um deles foi o Rivotril em gotas."},
+          {"senha": "Seringa-estante", "texto": "— Essa é uma das minhas Seringas."},
+          {"senha": "Cianeto", "texto": "— Então foi isso que matou o garoto."},
+          {"senha": "Fechadura", "texto": "— Não sei nada sobre isso."},
+          {"senha": "Final-Julia", "texto": " Eu não conhecia muitos eles mas mesmo assim que perda trágica. "},
+          {"senha": "Final-Sophia", "texto": " E pensar que aquela menina seria capaz de fazer algo assim. As aparências enganam. "},
+          {"senha": "Final-João", "texto": " Isso foi um engano! Eu não fui o culpado desse crime. "},
+          {"senha": "Final-Beatriz", "texto": " E pensar que a própria irmã faria algo assim com o irmão. "}
+        ]'>
+                <div class="conteudo-testemunho">
+                    <span class="design"> Vizinho </span>
+                    <p class="texto-ajuste line-altura"> — Estava colocando o lixo para fora quando ouvi gritos vindo da casa ao lado. Corri até a casa afim de ajudar, fiquei um tempo na porta até alguém abri-la: Beatriz. Ela me guiou até a cozinha onde a mãe dela estava chorando por cauda
+                        do filho . Pedi para ela ligar para a emergência enquanto eu iria tentar ajudar o garoto.</p>
+
+                    <!-- IDs transformados em classes para isolamento lúdico -->
+                    <div class="historico-revelado"></div>
+
+                    <div class="area-bloqueio change">
+                        <label class="textoInstrucaoClasse" for="inputPalavra">Insira a palavra chave para desbloquear informações: </label>
+                        <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
+
+                        <!-- Chamando a função correta criada para os blocos da página -->
+                        <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
+
+                </div>
+                </div>
+            </section>
+
+            <section class="bloco-testemunho cor-shadow" data-etapas='[
+          {"senha": "Beatriz", "texto": "— A irmã de Leo, Ela desenha muito bem  , já me moatrou alguns de seus desenhos. mas não sei o motivo dela querer cursar Química ao invés de seguir o caminho da Arte."},
+          {"senha":"Leo", "texto": "— Era um namorado decente se não fosse por aquele grupo de amigos dele."},
+          {"senha": "amigos", "texto": "Odeio todos eles! Se não fosse por eles influenciando o Leo , ele-ele-ele..."},
+          {"senha": "ele", "texto": "Esquece."},
+          {"senha": "manhã" , "texto": "— Eu passei a noite anterior na casa dele , tomei café pela manhã com todos e me despedi."},
+          {"senha": "Julia", "texto": "— Bem minha sogra é uma pessoa educada, ela se importava muito com Leo tanto que ele era a luz dela."},
+          {"senha": "luz", "texto": "— É quase como se ela vivesse para fazer ele feliz, mas é uma pena que ao focar em uma luz acaba por não perceber outra."},
+          {"senha": "Vizinho", "texto": "— Acho que o vi algumas vezes quando vinha para a casa de Leo contudo nunca tivemos nenhuma interação memorável."},
+          {"senha": "Clonazepam", "texto": "— Clonazapem? Não me recordo qual medicamento é esse ."},
+          {"senha": "Rivotril", "texto": "— Imagino que eu tenha ouvido falar sobre . Poderia me dizer o motivo dessa pergunta?"},
+          {"senha": "motivo", "texto": "— Então é isso. Se seu raciocínio estiver certo significa que foi algo planjeado há bastante tempo."},
+          {"senha": "tapete", "texto": "— O Tapete? É um lindo tapete! Minha sogra tem bom gosto."},
+          {"senha": "livro-pista", "texto": "— Se não me engano , esse livro é da Beatriz. Ela é obcecada por esses assuntos."},
+          {"senha": "seringa-estante", "texto": "— Já vi a Beatriz com essa Seringa antes.(palavra-chave:confronto)"},
+          {"senha": "posse", "texto": "— Será que me enganei? Tinha certeza que vi ela com essa mesma seringa."},
+          {"senha": "Marca-Corpo", "texto": "— Acho que ele sempre teve essa marca . Nunca parei para prestar atenção nisso."},
+          {"senha": "Final-Julia", "texto": " Como ela podê fazer isso com seu próprio filho? Ela é um monstro! "},
+          {"senha": "Final-Sophia", "texto": " Eu não fiz isso! Eu amava ele, eu jamais faria isso. "},
+          {"senha": "Final-Joao", "texto": " Por qual motivo ele faria isso com namorado? Eu não posso viver sem ele. "},
+          {"senha": "Final-Beatriz", "texto": " Eu sabia que tinha algo de errado, ela sempre foi suspeita. Ainda bem que foi presa. "}
+        ]'>
+                <div class="conteudo-testemunho">
+                    <span class="design"> Sophia </span>
+                    <p class="texto-ajuste line-altura"> — Ainda não acredito que ele se foi. De manhã estava tudo bem e de repente recebo a notícia que ele morreu. Meu amor , sinto tanto a sua falta.</p>
+
+                    <!-- IDs transformados em classes para isolamento lúdico -->
+                    <div class="historico-revelado"></div>
+
+                    <div class="area-bloqueio change">
+                        <label class="textoInstrucaoClasse" for="inputPalavra">Insira a palavra chave para desbloquear informações: </label>
+                        <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
+
+                        <!-- Chamando a função correta criada para os blocos da página -->
+                        <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
+
+                       
+                </div>
+                </div>
+            </section>
+
+
+            <section class="bloco-testemunho cenario-sala" data-etapas='[
+          {"senha": "Sofá", "texto": " Um sofá com apenas 1 almofada em cima. Tem uma mancha de pé no apoio de braço."},
+          {"senha":"Tv", "texto": " A Tv está desligada."},
+          {"senha": "Mesa" , "texto": " Uma mesa de vidro com um jarra de água em cima."},
+          {"senha": "Jarra", "texto": " A Jarra se encontra preenchida pela metade com água."},
+          {"senha": "Água", "texto": " Água Potável"},
+          {"senha": "Chão", "texto": " Tem umas almofadas perto do sofá , provalmente caíram quando algué se levantou. Vocé identifica um tapete entre a estante e a lateral do sofá."},
+          {"senha": "Estante", "texto": "Uma Estante com livros diversos. O topo não é visíbel."},
+          {"senha": "topo", "texto": " Passando a mão pelo topo da estante , você pega uma seringa.(palavra-chave: Seringa-topo)"},
+          {"senha": "tapete", "texto": "Um tapete marrom, mas parece fora do lugar."},
+          {"senha": "tapete-levantar", "texto": " Ao levantar o tapete , você percebe marcas no piso do chão. Provavelmente algo pesado foi arrastado."},
+          {"senha": "livros", "texto": "Observando os livros da estante , você encontra um livro de Toxicologia Avançada com uma página marcada."},
+          {"senha": "páginna", "texto": "Cianeto de potássio: Um componente altamente tóxico. No caso de ingestão , ligue para a emergência o mais rápido possível. O Cianeto de Potássio é capaz em um instante dependendo da dose.(palavra-chave: livro-pista )"},
+          {"senha": "Seringa-topo", "texto": "Ao analisar a Seringa é possível encontrar resíduos de alta concentração de Cianeto de Potássio.(palavra-chave: seringa-estante)"}
+
+        ]'>
+                <div class="conteudo-testemunho bloco-ajuste">
+                    <span> Sala Principal</span>
+                    <p class="texto-ajuste line-altura"> A sala onde tudo começou. Um largo sofá virado para uma parede onde se encontra uma Tv presa a ela. Entre o sofá e a Tv , uma mesa pequena, de formato circular feita de vidro e em cima uma Jarra de Água. Observando os arredores , é
+                        possível ver uma estante com uma variedade de livros e ao lado uma cortina branca cobrindo uma janela (Possível procurar por objetos ou partes do cômodo).</p>
+
+                    <!-- IDs transformados em classes para isolamento lúdico -->
+                    <div class="historico-revelado"></div>
+
+                    <div class="area-bloqueio sala-bloco">
+                        <label class="textoInstrucaoClasse" for="inputPalavra"> Digite o que deseja investigar na cena: </label>
+                        <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
+
+                        <!-- Chamando a função correta criada para os blocos da página -->
+                        <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
+
+                                                   
+                </div>
+                </div>
+            </section>
+
+    </main>
+
+
+
+
+    <section class="bloco-testemunho cenario-sala" data-etapas='[
+          {"senha": "Beatriz", "texto": " Você decide que o culpado por toda essa situação é Beatriz, a irmã mais velha da Vítima. Se ela é realmente a culpada? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-Beatriz )."},
+          {"senha": "Julia", "texto": "Você decide que o culpado por toda essa situação é a Julia, a mãe sa vítima. Se ela é realmente a culpada? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-Julia)."},
+          {"senha": "Sophia", "texto": "Você decide que o culpado por toda essa situação é Sophia, a namorada da Vítima. Se ela é realmente a culpada? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-Sophia )."},
+          {"senha": "Joao", "texto": "Você decide que o culpado por toda essa situação é João, o Vizinho da Vítima. Se ele é realmente o culpado? Apenas provas objetivas ou uma confissão direta dela revelarão as respostas que deseja (palavra-chave: Final-João )."}
+        ]'>
+        <div class="conteudo-testemunho bloco-ajuste">
+            <span> Conclusão Final </span>
+            <p class="texto-ajuste line-altura"> Após Invertigar as cenas, Interrogar os Suspeitos. Chegou a hora de dar um fim nesse caso. Então quem você acha que foi o Culpado por toda essa Situação?</p>
+
+            <!-- IDs transformados em classes para isolamento lúdico -->
+            <div class="historico-revelado"></div>
+
+            <div class="area-bloqueio sala-bloco">
+                <label class="textoInstrucaoClasse" for="inputPalavra"> Quem você deseja prender? </label>
+                <input type="text" class="inputPalavraClasse" placeholder="Digite o suspeito...">
+
+                <!-- Chamando a função correta criada para os blocos da página -->
+                <button class="change-buttom" onClick="verificarPalavraBloco(event)">Prender</button>
+                <p class="mensagem-erro-classe">Nome incorreto! </p>
+            </div>
+            </div>
+    </section>
+
+
+
+
+
+
+
+
+    <!-- Quadro de Informações (Modal) -->
+    <div id="meuQuadro" class="modal">
+        <div class="modal-conteudo">
+            <span class="botao-fechar" onclick="fecharQuadro()">&times;</span>
+            <h3 id="quadroTitulo">Informação</h3>
+            <p id="quadroTexto">Texto...</p>
+            <div id="historicoRevelado" class="historico-revelado"></div>
+            <div id="formularioValida" class="area-bloqueio">
+                <label id="textoInstrucao" for="inputPalavra">Insira a palavra chave para desbloquear informações: </label>
+                <input type="text" id="inputPalavra" placeholder="Digite a pista... ">
+                <button onClick="verificarPalavra(event)">Desbloquear</button>
+                <p id="mensagemErro">Palavra incorreta! Investigue mais.</p>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+const formularioValida = document.getElementById('formularioValida');
+const inputPalavra = document.getElementById('inputPalavra');
+const mensagemErro = document.getElementById('mensagemErro');
+const input = document.getElementById('suspeita');
+const valorDigitado = input ? input.value.toLowerCase().trim() : '';
+const mensagem = document.getElementById('mensagem');
+const botaoFinal = document.getElementById('botao-final');
+
+
+
+// Função separada para os blocos de testemunho individuais da página
+function verificarPalavraBloco(event) {
+    if (event) {
+        event.preventDefault(); // Impede recarregamento acidental da página
+    }
+
+    // 1. Encontra o bloco pai (.bloco-testemunho)
+    const bloco = event.target.closest('.bloco-testemunho');
+    if (!bloco) return;
+
+    // 2. Localiza os elementos internos exclusivos deste bloco
+    const inputCampo = bloco.querySelector('.inputPalavraClasse');
+    const msgErro = bloco.querySelector('.mensagem-erro-classe');
+    const historicoLocal = bloco.querySelector('.historico-revelado');
+
+    // 3. Pega o valor digitado pelo usuário e valida
+    const textoDigitado = inputCampo.value.trim().toLowerCase();
+    if (!textoDigitado) return;
+
+    try {
+        // 4. Converte a string do atributo 'data-etapas' em array de objetos
+        const etapas = JSON.parse(bloco.getAttribute('data-etapas'));
+
+        // 5. Procura se o palpite bate com a 'senha' de alguma pista na lista do bloco
+        const etapaEncontrada = etapas.find(
+            etapa => etapa.senha.toLowerCase() === textoDigitado
+        );
+
+        if (etapaEncontrada) {
+            msgErro.style.display = "none";
+            inputCampo.value = ""; // Limpa o campo após o acerto
+
+            // OPCIONAL: Evita adicionar a mesma pista repetida no histórico se o usuário digitar de novo
+            const jaContemPista = Array.from(historicoLocal.children).some(
+                div => div.innerText.includes(etapaEncontrada.texto)
+            );
+
+            if (!jaContemPista) {
+                // 6. Criação dinâmica da nova div com a pista revelada do bloco
+                const novaDiv = document.createElement('div');
+                novaDiv.className = 'info-revelada';
+                novaDiv.style.display = 'flex';
+                novaDiv.innerHTML = `<strong>(${etapaEncontrada.senha}):</strong> ${etapaEncontrada.texto}`;
+
+                // 7. Adiciona no histórico exclusivo deste bloco e aplica o scroll
+                historicoLocal.appendChild(novaDiv);
+                historicoLocal.scrollTop = historicoLocal.scrollHeight;
+            }
+        } else {
+            // Se a senha não constar na lista deste bloco, exibe o aviso vermelho
+            msgErro.style.display = "block";
+        }
+    } catch (error) {
+        console.error("Erro ao processar as etapas do bloco. Verifique se faltam vírgulas no JSON do HTML:", error);
+    }
+}
+
+// CORREÇÃO: Faz a tecla Enter funcionar em todos os campos de texto dos blocos de testemunho
+document.querySelectorAll('.inputPalavraClasse').forEach(input => {
+    input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o navegador de recarregar a página
+            
+            // Encontra o botão "Desbloquear" que está logo ao lado deste input e simula o clique nele
+            const botaoDoBloco = this.closest('.area-bloqueio').querySelector('.change-buttom');
+            if (botaoDoBloco) {
+                botaoDoBloco.click();
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
