@@ -314,7 +314,9 @@
             font-size: 1.05rem;
             line-height: 1.4;
         }
-        
+        #listaPalavrasChave {
+            margin-left: 10PX;
+        }
         @media screen and (max-width: 768px) {
             .basetopo h2 {
                 font-size: 1.17rem;
@@ -410,9 +412,8 @@
 
                         <!-- Chamando a função correta criada para os blocos da página -->
                         <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
-                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
-
-           
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p><br>
+                          <div class="bloco-anotacoes" data-cena="cena1"></div>
 
                     </div>
                 </div>
@@ -456,7 +457,9 @@
                         <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
 
                         <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
-                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais.</p>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais.</p><BR>
+                            
+                      <div class="bloco-anotacoes" data-cena="cena2"></div>
 
                     </div>
                     </div>              
@@ -498,8 +501,11 @@
                         <input type="text" class="inputPalavraClasse" placeholder="Digite a pista... ">
 
                         <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
-                        <p class="mensagem-erro-classe" style="display: none;">Palavra incorreta! Investigue mais.</p>
-                             
+                        <p class="mensagem-erro-classe" style="display: none;">Palavra incorreta! Investigue mais.</p><BR>
+                              <div class="bloco-anotacoes" data-cena="cena3"></div>
+
+                       
+                     
                 </div>    
                 </div>
             </section>
@@ -536,8 +542,11 @@
 
                         <!-- Chamando a função correta criada para os blocos da página -->
                         <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
-                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p><BR>
+                            
+                        <div class="bloco-anotacoes" data-cena="cena4"></div>
 
+                      
                 </div>
                 </div>
             </section>
@@ -577,7 +586,8 @@
 
                         <!-- Chamando a função correta criada para os blocos da página -->
                         <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
-                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p><BR>
+                         <div class="bloco-anotacoes" data-cena="cena5"></div>
 
                        
                 </div>
@@ -615,7 +625,11 @@
 
                         <!-- Chamando a função correta criada para os blocos da página -->
                         <button class="change-buttom" onClick="verificarPalavraBloco(event)">Desbloquear</button>
-                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p>
+                        <p class="mensagem-erro-classe">Palavra incorreta! Investigue mais</p> <BR>
+                            
+                          <div class="bloco-anotacoes" data-cena="cena6"></div>
+
+                       
 
                                                    
                 </div>
@@ -646,7 +660,11 @@
 
                 <!-- Chamando a função correta criada para os blocos da página -->
                 <button class="change-buttom" onClick="verificarPalavraBloco(event)">Prender</button>
-                <p class="mensagem-erro-classe">Nome incorreto! </p>
+                <p class="mensagem-erro-classe">Nome incorreto! </p> <BR>
+            
+                 <div class="bloco-anotacoes" data-cena="cena7"></div>
+
+                       
             </div>
             </div>
     </section>
@@ -685,6 +703,133 @@ const mensagem = document.getElementById('mensagem');
 const botaoFinal = document.getElementById('botao-final');
 
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    const blocos = document.querySelectorAll(".bloco-anotacoes");
+
+    blocos.forEach((bloco) => {
+
+        const identificador = bloco.dataset.cena;
+
+        // Cada section terá sua própria chave no localStorage
+        const chaveStorage = "palavrasChave_" + identificador;
+
+        let palavras = JSON.parse(
+            localStorage.getItem(chaveStorage) || "[]"
+        );
+
+        bloco.innerHTML = `
+            <div class="sistema-anotacoes">
+
+                <h3>📓 Caderno de investigação</h3>
+
+                <input
+                    type="text"
+                    class="campo-anotacao"
+                    placeholder="Digite uma palavra-chave..."
+                >
+
+                <button type="button" class="botao-adicionar">
+                    Anotar palavra
+                </button>
+
+                <div class="lista-anotacoes">
+                    <h4>Palavras encontradas:</h4>
+                    <ul class="palavras-lista"></ul>
+                </div>
+
+                <button type="button" class="botao-limpar">
+                    Limpar lista
+                </button>
+
+                <p class="mensagem-anotacao"></p>
+
+            </div>
+        `;
+
+        const input = bloco.querySelector(".campo-anotacao");
+        const lista = bloco.querySelector(".palavras-lista");
+        const mensagem = bloco.querySelector(".mensagem-anotacao");
+
+        // Mostrar palavras daquela section
+        function mostrarPalavras() {
+
+            lista.innerHTML = "";
+
+            palavras.forEach((palavra) => {
+
+                const item = document.createElement("li");
+                item.textContent = palavra;
+
+                lista.appendChild(item);
+
+            });
+
+        }
+
+        // Adicionar palavra
+        function adicionarPalavra() {
+
+            const palavra = input.value.trim();
+
+            if (!palavra) {
+                mensagem.textContent = "Digite uma palavra!";
+                return;
+            }
+
+            if (palavras.some(p =>
+                p.toLowerCase() === palavra.toLowerCase()
+            )) {
+                mensagem.textContent = "Essa palavra já foi anotada!";
+                return;
+            }
+
+            palavras.push(palavra);
+
+            localStorage.setItem(
+                chaveStorage,
+                JSON.stringify(palavras)
+            );
+
+            input.value = "";
+            mensagem.textContent = "Palavra anotada com sucesso!";
+
+            mostrarPalavras();
+        }
+
+        // Botão adicionar
+        bloco.querySelector(".botao-adicionar")
+            .addEventListener("click", adicionarPalavra);
+
+        // Adicionar usando Enter
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                adicionarPalavra();
+            }
+        });
+
+        // Limpar somente esta section
+        bloco.querySelector(".botao-limpar")
+            .addEventListener("click", () => {
+
+                if (confirm("Deseja apagar as palavras desta cena?")) {
+
+                    palavras = [];
+
+                    localStorage.removeItem(chaveStorage);
+
+                    mostrarPalavras();
+
+                    mensagem.textContent = "Anotações desta cena apagadas!";
+                }
+
+            });
+
+        mostrarPalavras();
+
+    });
+
+});
 
 // Função separada para os blocos de testemunho individuais da página
 function verificarPalavraBloco(event) {
